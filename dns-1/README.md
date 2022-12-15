@@ -23,6 +23,8 @@ DNSはドメイン名空間を管理するネームサーバーと名前解決�
 https://root-servers.org/
 ## Assignment
 
+**[INFO]**
+nsはbind9導入済みUbuntu20.04のインスタンスです。
 ### 1. ネームサーバーを構築してみよう
 ネームサーバーを準備し、`server.{あなたの traQ ID}`のレコードを登録してみましょう
 
