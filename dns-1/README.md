@@ -24,7 +24,7 @@ https://root-servers.org/
 ## Assignment
 
 **[INFO]**
-nsはbind9導入済みUbuntu20.04のインスタンスです。
+nsはbind9導入済みUbuntuのインスタンスです。
 ### 1. ネームサーバーを構築してみよう
 ネームサーバーを準備し、`server.{あなたの traQ ID}`のレコードを登録してみましょう
 
