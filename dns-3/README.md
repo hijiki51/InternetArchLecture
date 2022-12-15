@@ -59,19 +59,21 @@
 </details>
 
 ### 2. リゾルバを使って名前解決してみよう
-1.で立てたリゾルバをつかって名前解決をしてみて下さい。
+1.で立てたリゾルバをつかってs1~s3のサーバーのいずれかから名前解決をしてみて下さい。
 <details>
-<summary>ヒント1</summary>
+<summary>ヒント</summary>
+スタブリゾルバの設定は`/etc/resolv.conf`に書くことができます。
 </details>
 
-<details>
+<!-- <details>
 <summary>ヒント2</summary>
+r4にはフルリゾルバがないので、立てたフルリゾルバに向けて`DNS forwarding`を行う必要があります。
 </details>
 
 <details>
 <summary>ヒント3</summary>
-
-</details>
+「Vyos DNS Forwarding」等で調べるといいでしょう。
+</details> -->
 
 
 ***
