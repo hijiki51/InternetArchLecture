@@ -26,36 +26,30 @@ https://root-servers.org/
 **[INFO]**
 nsはbind9導入済みUbuntuのインスタンスです。
 ### 1. ネームサーバーを構築してみよう
-ネームサーバーを準備し、`server.{あなたの traQ ID}`のレコードを登録してみましょう
+ネームサーバーを準備し、`server.{あなたの traQ ID}`のレコードを登録してみましょう。
 
 <details>
 <summary>ヒント1</summary>
 </details>
-
+最初は他と同じように経路を設定する必要があります。
 <details>
+
 <summary>ヒント2</summary>
 </details>
-
+今回はIPv4を用いているので設定するのは`A`レコードです。
 <details>
 <summary>ヒント3</summary>
-
+「bind9 Aレコード 設定」などで検索してみるといいでしょう
 </details>
 
 ### 2. 名前解決をしてみよう
 1.ができたら相手のHTTPサーバのIPアドレスを名前解決することで取得してみましょう。
 ルートネームサーバーのIPは講師から共有されます。
 <details>
-<summary>ヒント1</summary>
+<summary>ヒント</summary>
 </details>
-
+DNSへのリクエストには`dig`コマンドを用います。
 <details>
-<summary>ヒント2</summary>
-</details>
-
-<details>
-<summary>ヒント3</summary>
-
-</details>
 
 ***
 
