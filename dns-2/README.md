@@ -3,10 +3,10 @@
 この章ではリソースレコード及びドメインの移譲について学びます。
 
 - [Chapter8: DNS 2](#chapter8-dns-2)
-	- [Lesson](#lesson)
-		- [リソースレコード](#リソースレコード)
-	- [Assignment](#assignment)
-		- [1. サブドメインを移譲してみよう](#1-サブドメインを移譲してみよう)
+  - [Lesson](#lesson)
+    - [リソースレコード](#リソースレコード)
+  - [Assignment](#assignment)
+    - [1. サブドメインを移譲してみよう](#1-サブドメインを移譲してみよう)
 
 ## Lesson
 
@@ -50,15 +50,17 @@
 移譲ができたらきちんと名前解決できるか確かめてみましょう
 <details>
 <summary>ヒント1</summary>
+子側では新しく移譲されたゾーンを設定する必要があります。
 </details>
 
 <details>
 <summary>ヒント2</summary>
+親側では子のネームサーバーを登録する必要があります。
 </details>
 
 <details>
 <summary>ヒント3</summary>
-
+「bind9 dns delegation」などで調べるといいでしょう。
 </details>
 
 
