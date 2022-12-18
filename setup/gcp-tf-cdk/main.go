@@ -1,12 +1,14 @@
 package main
 
 import (
+	"fmt"
 	"os"
 
 	"github.com/aws/constructs-go/constructs/v10"
 	"github.com/aws/jsii-runtime-go"
 	"github.com/goccy/go-yaml"
 
+	"github.com/cdktf/cdktf-provider-google-go/google/v4/computeinstance"
 	"github.com/cdktf/cdktf-provider-google-go/google/v4/provider"
 	"github.com/hashicorp/terraform-cdk-go/cdktf"
 )
@@ -16,6 +18,7 @@ type User struct {
 	PublicKey string `yaml:"publicKey"`
 }
 
+// nolint
 var (
 	admin        User
 	participants []User
@@ -44,6 +47,8 @@ func loadUsers(file string) error {
 }
 
 func NewMyStack(scope constructs.Construct, id string) cdktf.TerraformStack {
+	as := 60000
+
 	stack := cdktf.NewTerraformStack(scope, &id)
 
 	provider.NewGoogleProvider(scope, jsii.String("InternetArchLecture"), &provider.GoogleProviderConfig{
@@ -55,6 +60,13 @@ func NewMyStack(scope constructs.Construct, id string) cdktf.TerraformStack {
 	err := loadUsers("../users.yaml")
 	if err != nil {
 		panic(err)
+	}
+
+	for _, user := range participants {
+		computeinstance.NewComputeInstance(scope, jsii.String(fmt.Sprintf("%s_%d", user.UserID, as)), &computeinstance.ComputeInstanceConfig{
+			Name:        jsii.String(fmt.Sprintf("%s_%d", user.UserID, as)),
+			MachineType: jsii.String("e2-micro"),
+		})
 	}
 
 	return stack
