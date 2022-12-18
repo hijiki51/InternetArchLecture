@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 
+	"setup/generated/hashicorp/google/computeaddress"
 	"setup/generated/hashicorp/google/computeinstance"
 	"setup/generated/hashicorp/google/provider"
 
@@ -74,6 +75,11 @@ func NewMyStack(scope constructs.Construct, id string) cdktf.TerraformStack {
 			"ssh-keys": jsii.String(fmt.Sprintf("%s:%s", user.UserID, user.PublicKey)),
 		}
 
+		address := computeaddress.NewComputeAddress(stack, jsii.String("InternetArchLectureAddress"), &computeaddress.ComputeAddressConfig{
+			Name:        jsii.String(fmt.Sprintf("address-%s-%d", user.UserID, as)),
+			AddressType: jsii.String("EXTERNAL"),
+		})
+
 		computeinstance.NewComputeInstance(stack, jsii.String(fmt.Sprintf("InternetArchLectureInstance-%s-%d", user.UserID, as)), &computeinstance.ComputeInstanceConfig{
 			Name:        jsii.String(fmt.Sprintf("%s-%d", user.UserID, as)),
 			MachineType: jsii.String("e2-micro"),
@@ -86,8 +92,12 @@ func NewMyStack(scope constructs.Construct, id string) cdktf.TerraformStack {
 			},
 			NetworkInterface: []computeinstance.ComputeInstanceNetworkInterface{
 				{
-					Network:      jsii.String("default"),
-					AccessConfig: []computeinstance.ComputeInstanceNetworkInterfaceAccessConfig{},
+					Network: jsii.String("default"),
+					AccessConfig: []computeinstance.ComputeInstanceNetworkInterfaceAccessConfig{
+						{
+							NatIp: address.Address(),
+						},
+					},
 				},
 			},
 			Zone:     jsii.String("us-central1-a"),
