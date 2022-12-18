@@ -9,6 +9,7 @@ import (
 	"github.com/goccy/go-yaml"
 
 	"github.com/cdktf/cdktf-provider-google-go/google/v4/computeinstance"
+	"github.com/cdktf/cdktf-provider-google-go/google/v4/computenetwork"
 	"github.com/cdktf/cdktf-provider-google-go/google/v4/provider"
 	"github.com/hashicorp/terraform-cdk-go/cdktf"
 )
@@ -51,7 +52,7 @@ func NewMyStack(scope constructs.Construct, id string) cdktf.TerraformStack {
 
 	stack := cdktf.NewTerraformStack(scope, &id)
 
-	provider.NewGoogleProvider(scope, jsii.String("InternetArchLecture"), &provider.GoogleProviderConfig{
+	provider.NewGoogleProvider(scope, jsii.String("InternetArchLectureProject"), &provider.GoogleProviderConfig{
 		Project: jsii.String("internet-arch-lecture"),
 		Region:  jsii.String("asia-northeast1"),
 	})
@@ -62,12 +63,16 @@ func NewMyStack(scope constructs.Construct, id string) cdktf.TerraformStack {
 		panic(err)
 	}
 
+	network := computenetwork.NewComputeNetwork(scope, jsii.String("InternetArchLectureNetwork"), &computenetwork.ComputeNetworkConfig{
+		Name: jsii.String("internet-arch-lecture"),
+	})
+
 	for _, user := range participants {
 		pubKey := map[string]*string{
 			"ssh-keys": jsii.String(fmt.Sprintf("%s:%s", user.UserID, user.PublicKey)),
 		}
 
-		computeinstance.NewComputeInstance(scope, jsii.String(fmt.Sprintf("%s_%d", user.UserID, as)), &computeinstance.ComputeInstanceConfig{
+		computeinstance.NewComputeInstance(scope, jsii.String(fmt.Sprintf("InternetArchLectureInstance_%s_%d", user.UserID, as)), &computeinstance.ComputeInstanceConfig{
 			Name:        jsii.String(fmt.Sprintf("%s_%d", user.UserID, as)),
 			MachineType: jsii.String("e2-micro"),
 			BootDisk: &computeinstance.ComputeInstanceBootDisk{
@@ -77,8 +82,9 @@ func NewMyStack(scope constructs.Construct, id string) cdktf.TerraformStack {
 					Type:  jsii.String("pd-standard"),
 				},
 			},
-			Zone:     jsii.String("us-central1-a"),
-			Metadata: &pubKey,
+			NetworkInterface: network,
+			Zone:             jsii.String("us-central1-a"),
+			Metadata:         &pubKey,
 		})
 
 		as++
