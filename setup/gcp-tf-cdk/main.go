@@ -86,7 +86,7 @@ func NewMyStack(scope constructs.Construct, id string) cdktf.TerraformStack {
 			BootDisk: &computeinstance.ComputeInstanceBootDisk{
 				InitializeParams: &computeinstance.ComputeInstanceBootDiskInitializeParams{
 					Image: jsii.String("ubuntu-os-cloud/ubuntu-2004-lts"),
-					Size:  jsii.Number(10),
+					Size:  jsii.Number(30),
 					Type:  jsii.String("pd-standard"),
 				},
 			},
