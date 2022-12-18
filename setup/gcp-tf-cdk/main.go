@@ -67,6 +67,8 @@ func NewMyStack(scope constructs.Construct, id string) cdktf.TerraformStack {
 			Name:        jsii.String(fmt.Sprintf("%s_%d", user.UserID, as)),
 			MachineType: jsii.String("e2-micro"),
 		})
+
+		as++
 	}
 
 	return stack
