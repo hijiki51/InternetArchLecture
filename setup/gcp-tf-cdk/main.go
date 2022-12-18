@@ -63,9 +63,22 @@ func NewMyStack(scope constructs.Construct, id string) cdktf.TerraformStack {
 	}
 
 	for _, user := range participants {
+		pubKey := map[string]*string{
+			"ssh-keys": jsii.String(fmt.Sprintf("%s:%s", user.UserID, user.PublicKey)),
+		}
+
 		computeinstance.NewComputeInstance(scope, jsii.String(fmt.Sprintf("%s_%d", user.UserID, as)), &computeinstance.ComputeInstanceConfig{
 			Name:        jsii.String(fmt.Sprintf("%s_%d", user.UserID, as)),
 			MachineType: jsii.String("e2-micro"),
+			BootDisk: &computeinstance.ComputeInstanceBootDisk{
+				InitializeParams: &computeinstance.ComputeInstanceBootDiskInitializeParams{
+					Image: jsii.String("ubuntu-os-cloud/ubuntu-2004-lts"),
+					Size:  jsii.Number(10),
+					Type:  jsii.String("pd-standard"),
+				},
+			},
+			Zone:     jsii.String("us-central1-a"),
+			Metadata: &pubKey,
 		})
 
 		as++
