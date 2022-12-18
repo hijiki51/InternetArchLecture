@@ -74,8 +74,8 @@ func NewMyStack(scope constructs.Construct, id string) cdktf.TerraformStack {
 			"ssh-keys": jsii.String(fmt.Sprintf("%s:%s", user.UserID, user.PublicKey)),
 		}
 
-		computeinstance.NewComputeInstance(stack, jsii.String(fmt.Sprintf("InternetArchLectureInstance_%s_%d", user.UserID, as)), &computeinstance.ComputeInstanceConfig{
-			Name:        jsii.String(fmt.Sprintf("%s_%d", user.UserID, as)),
+		computeinstance.NewComputeInstance(stack, jsii.String(fmt.Sprintf("InternetArchLectureInstance-%s-%d", user.UserID, as)), &computeinstance.ComputeInstanceConfig{
+			Name:        jsii.String(fmt.Sprintf("%s-%d", user.UserID, as)),
 			MachineType: jsii.String("e2-micro"),
 			BootDisk: &computeinstance.ComputeInstanceBootDisk{
 				InitializeParams: &computeinstance.ComputeInstanceBootDiskInitializeParams{
