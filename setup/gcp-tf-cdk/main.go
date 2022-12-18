@@ -100,6 +100,7 @@ func NewMyStack(scope constructs.Construct, id string) cdktf.TerraformStack {
 					},
 				},
 			},
+			// MetadataStartupScript: jsii.String(fmt.Sprintf(`#!/bin/bash`),
 			Zone:     jsii.String("us-central1-a"),
 			Metadata: &pubKey,
 		})
