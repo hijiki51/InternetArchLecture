@@ -4,13 +4,13 @@ import (
 	"fmt"
 	"os"
 
+	"setup/generated/hashicorp/google/computeinstance"
+	"setup/generated/hashicorp/google/provider"
+
 	"github.com/aws/constructs-go/constructs/v10"
 	"github.com/aws/jsii-runtime-go"
 	"github.com/goccy/go-yaml"
 
-	"github.com/cdktf/cdktf-provider-google-go/google/v4/computeinstance"
-	"github.com/cdktf/cdktf-provider-google-go/google/v4/computenetwork"
-	"github.com/cdktf/cdktf-provider-google-go/google/v4/provider"
 	"github.com/hashicorp/terraform-cdk-go/cdktf"
 )
 
@@ -52,27 +52,29 @@ func NewMyStack(scope constructs.Construct, id string) cdktf.TerraformStack {
 
 	stack := cdktf.NewTerraformStack(scope, &id)
 
-	provider.NewGoogleProvider(scope, jsii.String("InternetArchLectureProject"), &provider.GoogleProviderConfig{
-		Project: jsii.String("internet-arch-lecture"),
-		Region:  jsii.String("asia-northeast1"),
-	})
-
-	// ユーザー情報を読み込む
-	err := loadUsers("../users.yaml")
+	credfile, err := os.ReadFile("../gcp-credentials.json")
 	if err != nil {
 		panic(err)
 	}
 
-	network := computenetwork.NewComputeNetwork(scope, jsii.String("InternetArchLectureNetwork"), &computenetwork.ComputeNetworkConfig{
-		Name: jsii.String("internet-arch-lecture"),
+	provider.NewGoogleProvider(stack, jsii.String("InternetArchLectureProject"), &provider.GoogleProviderConfig{
+		Project:     jsii.String("internetarchlecture-372008"),
+		Zone:        jsii.String("us-central1-a"),
+		Credentials: jsii.String(string(credfile)),
 	})
+
+	// ユーザー情報を読み込む
+	err = loadUsers("../users.yaml")
+	if err != nil {
+		panic(err)
+	}
 
 	for _, user := range participants {
 		pubKey := map[string]*string{
 			"ssh-keys": jsii.String(fmt.Sprintf("%s:%s", user.UserID, user.PublicKey)),
 		}
 
-		computeinstance.NewComputeInstance(scope, jsii.String(fmt.Sprintf("InternetArchLectureInstance_%s_%d", user.UserID, as)), &computeinstance.ComputeInstanceConfig{
+		computeinstance.NewComputeInstance(stack, jsii.String(fmt.Sprintf("InternetArchLectureInstance_%s_%d", user.UserID, as)), &computeinstance.ComputeInstanceConfig{
 			Name:        jsii.String(fmt.Sprintf("%s_%d", user.UserID, as)),
 			MachineType: jsii.String("e2-micro"),
 			BootDisk: &computeinstance.ComputeInstanceBootDisk{
@@ -82,9 +84,14 @@ func NewMyStack(scope constructs.Construct, id string) cdktf.TerraformStack {
 					Type:  jsii.String("pd-standard"),
 				},
 			},
-			NetworkInterface: network,
-			Zone:             jsii.String("us-central1-a"),
-			Metadata:         &pubKey,
+			NetworkInterface: []computeinstance.ComputeInstanceNetworkInterface{
+				{
+					Network:      jsii.String("default"),
+					AccessConfig: []computeinstance.ComputeInstanceNetworkInterfaceAccessConfig{},
+				},
+			},
+			Zone:     jsii.String("us-central1-a"),
+			Metadata: &pubKey,
 		})
 
 		as++
