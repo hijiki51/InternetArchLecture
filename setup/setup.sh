@@ -2,10 +2,8 @@
 
 sudo apt update
 sudo apt upgrade -y
-sudo apt install -y openvswitch-common openvswitch-switch lxc docker.io
+sudo apt install -y openvswitch-common openvswitch-switch docker.io
 
-lxd init --auto
-lxc profile device remove default eth0
 
 if [ ! -f ~/.commands ]; then
     curl https://raw.githubusercontent.com/hijiki51/InternetArchLecture/main/setup/.bashrc >> ~/.commands

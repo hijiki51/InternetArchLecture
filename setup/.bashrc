@@ -1,10 +1,6 @@
 attach() {	
     name=$1	
-    if [ "${name:0:1}" = "r" ] || [ "${name:0:1}" = "n" ]; then	
-        docker exec -it --user 1000 $name /bin/bash	
-    else	
-        lxc exec $name /bin/bash	
-    fi	
+    docker exec -it --user 1000 $name /bin/bash	
 }
 
 add_nic() {
@@ -74,7 +70,6 @@ nic_full_reset() {
 full_reset() {
     docker ps -qa | xargs docker rm -f
     docker network prune
-    lxc delete -f $(lxc list --format=csv --columns=n)
 
     seq 1 6 | xargs -IXXX docker run -d --name rXXX --hostname=rXXX --net=none --privileged -v /lib/modules:/lib/modules 2stacks/vyos:latest /sbin/init
     docker run -d --name rEX --hostname=rEX --net=host --privileged -v /lib/modules:/lib/modules 2stacks/vyos:latest /sbin/init
