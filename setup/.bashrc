@@ -25,15 +25,10 @@ reset_nic() {
 add_server() {
     router_name=$1
     container_name=$2
-    lxc network create br-$router_name-server
-    lxc network set br-$router_name-server bridge.driver openvswitch
+    ovs-vsctl add-br br-$router_name-server
     ovs-docker add-port br-$router_name-server eth100 $router_name
-    lxc launch ubuntu:20.04 $container_name --network=br-${router_name}-server --config=user.network-config="version: 1
-config:
-  - type: veth
-    name: eth0
-    link: br-${router_name}-server
-"
+    docker run -d --name $container_name --hostname=$container_name --net=none --privileged ubuntu:20.04
+    ovs-docker add-port br-$router_name-server eth0 $container_name
 }
 
 nic_full_reset() {
