@@ -1,6 +1,10 @@
 attach() {	
     name=$1	
-    docker exec -it --user 1000 $name /bin/bash	
+    if [ "${name:0:1}" = "r" ]; then	
+        docker exec -it --user 1000 $name /bin/bash	
+    else	
+        docker exec -it $name /bin/bash	
+    fi	
 }
 
 add_nic() {
