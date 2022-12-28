@@ -70,6 +70,16 @@ func NewMyStack(scope constructs.Construct, id string) cdktf.TerraformStack {
 		panic(err)
 	}
 
+	// network := computenetwork.NewComputeNetwork(stack, jsii.String("InternetArchLectureNetwork"), &computenetwork.ComputeNetworkConfig{
+	// 	Name: jsii.String("internet-arch-lecture-network"),
+	// })
+
+	// subnet := computesubnetwork.NewComputeSubnetwork(stack, jsii.String("InternetArchLecturePrivateSubnet"), &computesubnetwork.ComputeSubnetworkConfig{
+	// 	Name:        jsii.String("internet-arch-lecture-private-subnet"),
+	// 	Network:     network.Id(),
+	// 	IpCidrRange: jsii.String(fmt.Sprintf("192.168..0/24", as)),
+	// })
+
 	for _, user := range participants {
 		pubKey := map[string]*string{
 			"ssh-keys": jsii.String(fmt.Sprintf("%s:%s", user.UserID, user.PublicKey)),
