@@ -19,8 +19,8 @@ if [ ! -f ~/.commands ]; then
 fi
 
 source ~/.commands
-seq 1 6 | xargs -IXXX docker run -d --name rXXX --hostname=rXXX --net=none --privileged -v /lib/modules:/lib/modules 2stacks/vyos:1.2.0-rc11 /sbin/init
-docker run -d --name rEX --hostname=rEX --net=host --privileged -v /lib/modules:/lib/modules 2stacks/vyos:1.2.0-rc11 /sbin/init
+seq 1 6 | xargs -IXXX docker run -d --name rXXX --hostname=rXXX --net=none --privileged -v /lib/modules:/lib/modules ghcr.io/hijiki51/internetarchlecture/vyos:1.3 /sbin/init
+docker run -d --name rEX --hostname=rEX --net=host --privileged -v /lib/modules:/lib/modules ghcr.io/hijiki51/internetarchlecture/vyos:1.3 /sbin/init
 # docker run -d --name ns --hostname=ns --net=host --privileged  -v named:/etc/bind -v lib_bind:/var/lib/bind -v cache_bind:/var/cache/bind ubuntu/bind9:latest
 
 
