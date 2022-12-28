@@ -27,7 +27,7 @@ add_server() {
     container_name=$2
     ovs-vsctl add-br br-$router_name-server
     ovs-docker add-port br-$router_name-server eth100 $router_name
-    docker run -d --name $container_name --hostname=$container_name --net=none --privileged ubuntu:20.04 /sbin/init
+    docker run -d --name $container_name --hostname=$container_name --net=none --privileged ubuntu:20.04 /bin/sh -c "while :; do sleep 1000; done"
     ovs-docker add-port br-$router_name-server eth0 $container_name 
 }
 
