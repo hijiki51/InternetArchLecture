@@ -40,7 +40,7 @@ nic_full_reset() {
     
     seq 1 6 | xargs -I XXX docker exec rXXX bash -c "echo '127.0.0.1 rXXX' >> /etc/hosts"
     docker exec rEX bash -c "echo '127.0.0.1 rEX' >> /etc/hosts"
-    docker exec ns bash -c "echo '127.0.0.1 ns' >> /etc/hosts"
+    # docker exec ns bash -c "echo '127.0.0.1 ns' >> /etc/hosts"
     
     reset_nic r1
     reset_nic r2
@@ -49,7 +49,7 @@ nic_full_reset() {
     reset_nic r5
     reset_nic r6
     reset_nic rEX
-    reset_nic ns    
+    # reset_nic ns    
 
     connect r1 r6
     connect r1 r2
@@ -60,7 +60,7 @@ nic_full_reset() {
     connect r5 r6
     connect r1 rEX
     connect r6 rEX
-    connect r4 ns
+    # connect r4 ns
     
     add_nic br-r4-server r4 100
     add_nic br-rEX-server rEX 100
@@ -72,7 +72,7 @@ full_reset() {
 
     seq 1 6 | xargs -IXXX docker run -d --name rXXX --hostname=rXXX --net=none --privileged -v /lib/modules:/lib/modules 2stacks/vyos:latest /sbin/init
     docker run -d --name rEX --hostname=rEX --net=host --privileged -v /lib/modules:/lib/modules 2stacks/vyos:latest /sbin/init
-    docker run -d --name ns --hostname=ns --net=host --privileged  -v named:/etc/bind -v lib_bind:/var/lib/bind -v cache_bind:/var/cache/bind ubuntu/bind9:latest
+    # docker run -d --name ns --hostname=ns --net=host --privileged  -v named:/etc/bind -v lib_bind:/var/lib/bind -v cache_bind:/var/cache/bind ubuntu/bind9:latest
 
     nic_full_reset
     add_server r4 s1
