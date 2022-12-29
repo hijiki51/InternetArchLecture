@@ -31,7 +31,7 @@ add_server() {
     container_name=$2
     ovs-vsctl add-br br-$router_name-server
     ovs-docker add-port br-$router_name-server eth100 $router_name
-    docker run -d --name $container_name --hostname=$container_name --net=none --privileged ubuntu:20.04 /bin/sh -c "while :; do sleep 1000; done"
+    docker run -d --restart always --name $container_name --hostname=$container_name --net=none --privileged ubuntu:20.04 /bin/sh -c "while :; do sleep 1000; done"
     ovs-docker add-port br-$router_name-server ens4 $container_name 
 }
 
@@ -40,7 +40,7 @@ nic_full_reset() {
     
     seq 1 6 | xargs -I XXX docker exec rXXX bash -c "echo '127.0.0.1 rXXX' >> /etc/hosts"
     docker exec rEX bash -c "echo '127.0.0.1 rEX' >> /etc/hosts"
-    # docker exec ns bash -c "echo '127.0.0.1 ns' >> /etc/hosts"
+    docker exec ns bash -c "echo '127.0.0.1 ns' >> /etc/hosts"
     
     reset_nic r1
     reset_nic r2
@@ -70,9 +70,9 @@ full_reset() {
     docker ps -qa | xargs docker rm -f
     docker network prune
 
-    seq 1 6 | xargs -IXXX docker run -d --name rXXX --hostname=rXXX --net=none --privileged -v /lib/modules:/lib/modules ghcr.io/hijiki51/internetarchlecture/vyos:1.2 /sbin/init
-    docker run -d --name rEX --hostname=rEX --net=host --privileged -v /lib/modules:/lib/modules ghcr.io/hijiki51/internetarchlecture/vyos:1.2 /sbin/init
-    # docker run -d --name ns --hostname=ns --net=host --privileged  -v named:/etc/bind -v lib_bind:/var/lib/bind -v cache_bind:/var/cache/bind ubuntu/bind9:latest
+    seq 1 6 | xargs -IXXX docker run -d --restart always --name rXXX --hostname=rXXX --net=none --privileged -v /lib/modules:/lib/modules ghcr.io/hijiki51/internetarchlecture/vyos:1.2 /sbin/init
+    docker run -d --restart always --name rEX --hostname=rEX --net=host --privileged -v /lib/modules:/lib/modules ghcr.io/hijiki51/internetarchlecture/vyos:1.2 /sbin/init
+    docker run -d --restart always --name ns --hostname=ns --net=host --privileged  -v named:/etc/bind -v lib_bind:/var/lib/bind -v cache_bind:/var/cache/bind ubuntu/bind9:latest
 
     nic_full_reset
     add_server r4 s1
