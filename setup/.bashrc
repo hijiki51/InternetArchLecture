@@ -31,7 +31,7 @@ add_server() {
     container_name=$2
     ovs-vsctl add-br br-$router_name-server
     ovs-docker add-port br-$router_name-server eth100 $router_name
-    docker run -d --restart always --name $container_name --hostname=$container_name --net=none --privileged ubuntu:20.04 /bin/sh -c "while :; do sleep 1000; done"
+    docker run -d --restart always --name $container_name --hostname=$container_name --net=none --privileged internetarchlecture/server:20.04-fixed /bin/sh -c "while :; do sleep 1000; done"
     ovs-docker add-port br-$router_name-server ens4 $container_name 
 }
 
@@ -70,8 +70,8 @@ full_reset() {
     docker ps -qa | xargs docker rm -f
     docker network prune
 
-    seq 1 6 | xargs -IXXX docker run -d --restart always --name rXXX --hostname=rXXX --net=none --privileged -v /lib/modules:/lib/modules ghcr.io/hijiki51/internetarchlecture/vyos:1.2 /sbin/init
-    docker run -d --restart always --name rEX --hostname=rEX --net=host --privileged -v /lib/modules:/lib/modules ghcr.io/hijiki51/internetarchlecture/vyos:1.2 /sbin/init
+    seq 1 6 | xargs -IXXX docker run -d --restart always --name rXXX --hostname=rXXX --net=none --privileged -v /lib/modules:/lib/modules ghcr.io/hijiki51/internetarchlecture/vyos:1.2-fixed /sbin/init
+    docker run -d --restart always --name rEX --hostname=rEX --net=host --privileged -v /lib/modules:/lib/modules ghcr.io/hijiki51/internetarchlecture/vyos:1.2-fixed /sbin/init
     docker run -d --restart always --name ns --hostname=ns --net=host --privileged  -v named:/etc/bind -v lib_bind:/var/lib/bind -v cache_bind:/var/cache/bind ubuntu/bind9:latest
 
     nic_full_reset
