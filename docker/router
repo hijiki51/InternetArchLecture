@@ -1,3 +1,4 @@
 FROM ghcr.io/hijiki51/internetarchlecture/vyos:1.2
 
+RUN sed -i "s/\/config\/dhcpd.leases/\/opt\/vyatta\/config\/dhcpd.leases/" /usr/libexec/vyos/op_mode/show_dhcp.py
 RUN sed -i "s/\/config\/dhcpd.leases/\/opt\/vyatta\/config\/dhcpd.leases/" /usr/libexec/vyos/conf_mode/dhcp_server.py
