@@ -1,7 +1,7 @@
 attach() {	
     name=$1	
     if [ "${name:0:1}" = "r" ]; then	
-        docker exec -it --user 1000 $name /bin/bash	
+        docker exec -it --user 117 $name /bin/vbash	
     else	
         docker exec -it $name /bin/bash	
     fi	
@@ -32,7 +32,7 @@ add_server() {
     ovs-vsctl add-br br-$router_name-server
     ovs-docker add-port br-$router_name-server eth100 $router_name
     docker run -d --name $container_name --hostname=$container_name --net=none --privileged ubuntu:20.04 /bin/sh -c "while :; do sleep 1000; done"
-    ovs-docker add-port br-$router_name-server eth0 $container_name 
+    ovs-docker add-port br-$router_name-server ens4 $container_name 
 }
 
 nic_full_reset() {

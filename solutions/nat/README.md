@@ -7,7 +7,7 @@
 root@150-95-184-195:~# attach rEX
 vyos@rEX:/$ config
 [edit]
-vyos@rEX# set nat source rule 1 outbound-interface eth0 ;グローバルネットワークとの接続点
+vyos@rEX# set nat source rule 1 outbound-interface ens4 ;グローバルネットワークとの接続点
 
 vyos@rEX# set nat source rule 1 source address 192.168.XXX.0/24 ;NATを適用する送信元ネットワークの範囲
 

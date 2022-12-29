@@ -43,7 +43,7 @@ IPIPにはPoint to Pointインタフェースであるtunnelインターフェ�
 
 **[WARN]**  
 tunnelインターフェース上でOSPFを有効化し、sourceやdestinationのIPをtunnelインターフェース経由で学習してしまわないように注意してください。\
-OSPFはネットワークで指定するため、IPアドレスが同じ`eth0`とtunnelインタフェースの両方でOSPFが有効になり、外側にあるtunnelインタフェースで経路を学習するようになります。\
+OSPFはネットワークで指定するため、IPアドレスが同じ`ens4`とtunnelインタフェースの両方でOSPFが有効になり、外側にあるtunnelインタフェースで経路を学習するようになります。\
 この場合、tunnel接続のためのNextHopがtunnelインタフェース自身になり`recursive routing`状態に陥ることで、tunnelインタフェースがUpDownを繰り返し、その結果OSPFのネイバーもUpDownを繰り返します。
 
 ## Assignment

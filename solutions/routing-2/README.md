@@ -28,7 +28,7 @@ rEXやr4では`passive-interface`を設定することにも注意してくだ�
 
 [rEX]
 ```
-vyos@rEX# set protocols ospf passive-interface eth0
+vyos@rEX# set protocols ospf passive-interface ens4
 ```
 
 また、OSPFでもRIPやEIGRPなどのルーティングプロトコルのようにデフォルトルートを生成することができます。
