@@ -31,7 +31,7 @@ add_server() {
     container_name=$2
     ovs-vsctl add-br br-$router_name-server
     ovs-docker add-port br-$router_name-server eth100 $router_name
-    docker run -d --restart always --name $container_name --hostname=$container_name --net=none --privileged internetarchlecture/server:20.04-fixed /bin/sh -c "while :; do sleep 1000; done"
+    docker run -d --restart always --name $container_name --hostname=$container_name --net=none --privileged ghcr.io/hijiki51/internetarchlecture/server:20.04-fixed /bin/sh -c "while :; do sleep 1000; done"
     ovs-docker add-port br-$router_name-server ens4 $container_name 
 }
 
