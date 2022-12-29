@@ -49,7 +49,7 @@ nic_full_reset() {
     reset_nic r5
     reset_nic r6
     reset_nic rEX
-    # reset_nic ns    
+    reset_nic ns    
 
     connect r1 r6
     connect r1 r2
@@ -60,7 +60,7 @@ nic_full_reset() {
     connect r5 r6
     connect r1 rEX
     connect r6 rEX
-    # connect r4 ns
+    connect r4 ns
     
     add_nic br-r4-server r4 100
     add_nic br-rEX-server rEX 100
