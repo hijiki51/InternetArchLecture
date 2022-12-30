@@ -4,7 +4,7 @@
 
 [rEX]
 ```
-root@150-95-184-195:~# attach rEX
+root@hijiki51-60000:/# attach rEX
 minion@rEX:/$ config
 [edit]
 minion@rEX# set nat source rule 1 outbound-interface ens4 ;グローバルネットワークとの接続点
@@ -21,7 +21,7 @@ exit
 
 [r1]
 ```
-root@150-95-184-195:~# attach r1
+root@hijiki51-60000:/# attach r1
 minion@r1:/$ config
 [edit]
 minion@r1# set protocols static route 0.0.0.0/0 next-hop 192.168.XXX.1 ;送信先ネットワークに応じて次のノードを指定
