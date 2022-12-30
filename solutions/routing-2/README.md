@@ -5,19 +5,19 @@
 各自のネットワークに合わせて変更してください。
 [例: r6]
 ```
-root@150-95-184-195:~# attach r5
-vyos@r6:/$ config
+root@hijiki51-60000:/# attach r5
+minion@r6:/$ config
 [edit]
-vyos@r6# set protocols ospf area 0 network 192.168.0.12/30
+minion@r6# set protocols ospf area 0 network 192.168.0.12/30
 
-vyos@r6# set protocols ospf area 0 network 192.168.0.24/30
+minion@r6# set protocols ospf area 0 network 192.168.0.24/30
 
-vyos@r6# set protocols ospf area 0 network 192.168.0.28/30
+minion@r6# set protocols ospf area 0 network 192.168.0.28/30
 
-vyos@r6# commit
-vyos@r6# save
+minion@r6# commit
+minion@r6# save
 [edit]
-vyos@r6# exit
+minion@r6# exit
 exit
 ```
 
@@ -28,7 +28,7 @@ rEXやr4では`passive-interface`を設定することにも注意してくだ�
 
 [rEX]
 ```
-vyos@rEX# set protocols ospf passive-interface ens4
+minion@rEX# set protocols ospf passive-interface ens4
 ```
 
 また、OSPFでもRIPやEIGRPなどのルーティングプロトコルのようにデフォルトルートを生成することができます。
@@ -44,7 +44,7 @@ OSPFでデフォルトルートを生成するためには、`default-informatio
 
 [rEX]
 ```
-vyos@rEX# set protocols ospf default-information originate always
+minion@rEX# set protocols ospf default-information originate always
 ```
 
 [INFO]
@@ -62,7 +62,7 @@ vyos@rEX# set protocols ospf default-information originate always
 
 [例: r2]
 ```
-vyos@r2# set interfaces ethernet eth11 ip ospf cost 200
+minion@r2# set interfaces ethernet eth11 ip ospf cost 200
 ```
 
 どのような経路を通っているか確認するには`traceroute`コマンドなどを利用してください。
