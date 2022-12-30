@@ -15,6 +15,10 @@ import (
 	"github.com/hashicorp/terraform-cdk-go/cdktf"
 )
 
+// asia-northeast1-a,  asia-northeast3-a4
+// 各リージョン7個ずつ
+const zone = "asia-northeast3-a"
+
 type User struct {
 	UserID    string `yaml:"userID"`
 	PublicKey string `yaml:"publicKey"`
@@ -49,7 +53,7 @@ func loadUsers(file string) error {
 }
 
 func NewMyStack(scope constructs.Construct, id string) cdktf.TerraformStack {
-	as := 60000
+	as := 60010
 
 	stack := cdktf.NewTerraformStack(scope, &id)
 
@@ -60,13 +64,13 @@ func NewMyStack(scope constructs.Construct, id string) cdktf.TerraformStack {
 
 	provider.NewGoogleProvider(stack, jsii.String("InternetArchLectureProject"), &provider.GoogleProviderConfig{
 		Project:     jsii.String("internetarchlecture-372008"),
-		Zone:        jsii.String("us-central1-a"),
+		Zone:        jsii.String(zone),
 		Credentials: jsii.String(string(credfile)),
 	})
 
 	bprov := bprovider.NewGoogleBetaProvider(stack, jsii.String("InternetArchLectureProjectBeta"), &bprovider.GoogleBetaProviderConfig{
 		Project:     jsii.String("internetarchlecture-372008"),
-		Zone:        jsii.String("us-central1-a"),
+		Zone:        jsii.String(zone),
 		Credentials: jsii.String(string(credfile)),
 	})
 
@@ -99,7 +103,7 @@ func NewMyStack(scope constructs.Construct, id string) cdktf.TerraformStack {
 				Name:               jsii.String(fmt.Sprintf("%s-%d", user.UserID, as)),
 				MachineType:        jsii.String("e2-micro"),
 				SourceMachineImage: jsii.String("projects/internetarchlecture-372008/global/machineImages/internetarchlecture-participants"),
-				Zone:               jsii.String("us-central1-a"),
+				Zone:               jsii.String(zone),
 				Metadata:           &pubKey,
 			},
 		)
@@ -138,7 +142,7 @@ func NewMyStack(scope constructs.Construct, id string) cdktf.TerraformStack {
 func main() {
 	app := cdktf.NewApp(nil)
 
-	NewMyStack(app, "gcp-tf-cdk")
+	NewMyStack(app, "gcp-tf-cdk-2")
 
 	app.Synth()
 }
