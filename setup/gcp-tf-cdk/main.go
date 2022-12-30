@@ -15,9 +15,9 @@ import (
 	"github.com/hashicorp/terraform-cdk-go/cdktf"
 )
 
-// asia-northeast1-a,  asia-northeast3-a4
+// asia-northeast1-a, asia-northeast2-a, asia-northeast3-a
 // 各リージョン7個ずつ
-const zone = "asia-northeast3-a"
+const zone = "asia-northeast2-a"
 
 type User struct {
 	UserID    string `yaml:"userID"`
@@ -53,7 +53,7 @@ func loadUsers(file string) error {
 }
 
 func NewMyStack(scope constructs.Construct, id string) cdktf.TerraformStack {
-	as := 60010
+	as := 60020
 
 	stack := cdktf.NewTerraformStack(scope, &id)
 
@@ -142,7 +142,10 @@ func NewMyStack(scope constructs.Construct, id string) cdktf.TerraformStack {
 func main() {
 	app := cdktf.NewApp(nil)
 
-	NewMyStack(app, "gcp-tf-cdk-2")
+	// gcp-tf-cdk
+	// gcp-tf-cdk-2
+	// gcp-tf-cdk-3
+	NewMyStack(app, "gcp-tf-cdk-3")
 
 	app.Synth()
 }
