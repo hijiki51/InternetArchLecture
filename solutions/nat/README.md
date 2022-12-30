@@ -5,31 +5,32 @@
 [rEX]
 ```
 root@150-95-184-195:~# attach rEX
-vyos@rEX:/$ config
+minion@rEX:/$ config
 [edit]
-vyos@rEX# set nat source rule 1 outbound-interface ens4 ;グローバルネットワークとの接続点
+minion@rEX# set nat source rule 1 outbound-interface ens4 ;グローバルネットワークとの接続点
+minion@rEX# set nat source rule 1 source address 192.168.XXX.0/24 ;NATを適用する送信元ネットワークの範囲
 
-vyos@rEX# set nat source rule 1 source address 192.168.XXX.0/24 ;NATを適用する送信元ネットワークの範囲
+minion@rEX# set nat source rule 1 translation address masquerade
 
-vyos@rEX# set nat source rule 1 translation address masquerade
-
-vyos@rEX# commit
-vyos@rEX# save
+minion@rEX# commit
+minion@rEX# save
 [edit]
-vyos@rEX# exit
+minion@rEX# exit
 exit
 ```
 
 [r1]
 ```
 root@150-95-184-195:~# attach r1
-vyos@r1:/$ config
+minion@r1:/$ config
 [edit]
-vyos@r1# set protocols static route 0.0.0.0/0 next-hop 192.168.XXX.1 ;送信先ネットワークに応じて次のノードを指定
+minion@r1# set protocols static route 0.0.0.0/0 next-hop 192.168.XXX.1 ;送信先ネットワークに応じて次のノードを指定
 
-vyos@r1# commit
-
-vyos@r1# ping 8.8.8.8
+minion@r1# commit
+minion@r1# save
+minion@r1# exit
+minion@r1:/$ exit
+root@hijiki51-60000:/# ping 8.8.8.8
 PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
 64 bytes from 8.8.8.8: icmp_req=1 ttl=55 time=1.59 ms
 64 bytes from 8.8.8.8: icmp_req=2 ttl=55 time=1.06 ms
