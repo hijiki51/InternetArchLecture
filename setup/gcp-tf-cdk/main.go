@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"os"
 
-	"setup/generated/hashicorp/google/computeaddress"
-	"setup/generated/hashicorp/google/computeinstance"
 	"setup/generated/hashicorp/google/provider"
+	"setup/generated/hashicorp/google_beta/googlecomputeinstancefrommachineimage"
+	bprovider "setup/generated/hashicorp/google_beta/provider"
 
 	"github.com/aws/constructs-go/constructs/v10"
 	"github.com/aws/jsii-runtime-go"
@@ -64,6 +64,12 @@ func NewMyStack(scope constructs.Construct, id string) cdktf.TerraformStack {
 		Credentials: jsii.String(string(credfile)),
 	})
 
+	bprov := bprovider.NewGoogleBetaProvider(stack, jsii.String("InternetArchLectureProjectBeta"), &bprovider.GoogleBetaProviderConfig{
+		Project:     jsii.String("internetarchlecture-372008"),
+		Zone:        jsii.String("us-central1-a"),
+		Credentials: jsii.String(string(credfile)),
+	})
+
 	// ユーザー情報を読み込む
 	err = loadUsers("../users.yaml")
 	if err != nil {
@@ -85,35 +91,43 @@ func NewMyStack(scope constructs.Construct, id string) cdktf.TerraformStack {
 			"ssh-keys": jsii.String(fmt.Sprintf("%s:%s", user.UserID, user.PublicKey)),
 		}
 
-		address := computeaddress.NewComputeAddress(stack, jsii.String("InternetArchLectureAddress"), &computeaddress.ComputeAddressConfig{
-			Name:        jsii.String(fmt.Sprintf("address-%s-%d", user.UserID, as)),
-			AddressType: jsii.String("EXTERNAL"),
-		})
+		googlecomputeinstancefrommachineimage.NewGoogleComputeInstanceFromMachineImage(
+			stack,
+			jsii.String(fmt.Sprintf("InternetArchLectureInstance-%s-%d", user.UserID, as)),
+			&googlecomputeinstancefrommachineimage.GoogleComputeInstanceFromMachineImageConfig{
+				Provider:           bprov,
+				Name:               jsii.String(fmt.Sprintf("%s-%d", user.UserID, as)),
+				MachineType:        jsii.String("e2-micro"),
+				SourceMachineImage: jsii.String("projects/internetarchlecture-372008/global/machineImages/internetarchlecture-participants"),
+				Zone:               jsii.String("us-central1-a"),
+				Metadata:           &pubKey,
+			},
+		)
 
-		computeinstance.NewComputeInstance(stack, jsii.String(fmt.Sprintf("InternetArchLectureInstance-%s-%d", user.UserID, as)), &computeinstance.ComputeInstanceConfig{
-			Name:        jsii.String(fmt.Sprintf("%s-%d", user.UserID, as)),
-			MachineType: jsii.String("e2-micro"),
-			BootDisk: &computeinstance.ComputeInstanceBootDisk{
-				InitializeParams: &computeinstance.ComputeInstanceBootDiskInitializeParams{
-					Image: jsii.String("ubuntu-os-cloud/ubuntu-2004-lts"),
-					Size:  jsii.Number(30),
-					Type:  jsii.String("pd-standard"),
-				},
-			},
-			NetworkInterface: []computeinstance.ComputeInstanceNetworkInterface{
-				{
-					Network: jsii.String("default"),
-					AccessConfig: []computeinstance.ComputeInstanceNetworkInterfaceAccessConfig{
-						{
-							NatIp: address.Address(),
-						},
-					},
-				},
-			},
-			// MetadataStartupScript: jsii.String(fmt.Sprintf(`#!/bin/bash`),
-			Zone:     jsii.String("us-central1-a"),
-			Metadata: &pubKey,
-		})
+		// computeinstance.NewComputeInstance(stack, jsii.String(fmt.Sprintf("InternetArchLectureInstance-%s-%d", user.UserID, as)), &computeinstance.ComputeInstanceConfig{
+		// 	Name:        jsii.String(fmt.Sprintf("%s-%d", user.UserID, as)),
+		// 	MachineType: jsii.String("e2-micro"),
+		// 	BootDisk: &computeinstance.ComputeInstanceBootDisk{
+		// 		InitializeParams: &computeinstance.ComputeInstanceBootDiskInitializeParams{
+		// 			Image: jsii.String("ubuntu-os-cloud/ubuntu-2004-lts"),
+		// 			Size:  jsii.Number(30),
+		// 			Type:  jsii.String("pd-standard"),
+		// 		},
+		// 	},
+		// NetworkInterface: []computeinstance.ComputeInstanceNetworkInterface{
+		// 	{
+		// 		Network: jsii.String("default"),
+		// 		AccessConfig: []computeinstance.ComputeInstanceNetworkInterfaceAccessConfig{
+		// 			{
+		// 				NatIp: address.Address(),
+		// 			},
+		// 		},
+		// 	},
+		// },
+		// 	// MetadataStartupScript: jsii.String(fmt.Sprintf(`#!/bin/bash`),
+		// 	Zone:     jsii.String("us-central1-a"),
+		// 	Metadata: &pubKey,
+		// })
 
 		as++
 	}

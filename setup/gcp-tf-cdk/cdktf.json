@@ -5,7 +5,8 @@
   "projectId": "186586ef-5a3c-47cd-866e-536672aa85cf",
   "sendCrashReports": "false",
   "terraformProviders": [
-    "hashicorp/google@~>4.46.0"
+    "hashicorp/google@~>4.46.0",
+    "hashicorp/google-beta@~>4.47.0"
   ],
   "terraformModules": [],
   "context": {
