@@ -8,6 +8,9 @@
   - [Introduction](#introduction)
   - [First Step: Setup](#first-step-setup)
   - [Table of Contents](#table-of-contents)
+  - [再起動時の設定](#再起動時の設定)
+      - [サーバー](#サーバー)
+      - [各ルーター](#各ルーター)
 
 ## Introduction
 
@@ -40,3 +43,24 @@ Exec this script:
 1. [DNS 1](/dns-1/README.md)
 1. [DNS 2](/dns-2/README.md)
 1. [DNS 3](/dns-3/README.md)
+
+
+## 再起動時の設定
+現状dockerとbridgeの接続がコンテナの停止によって切断されてしまう。
+そのため、コンテナを再起動したときには以下の手順で復旧を行う。
+
+#### サーバー
+```
+$ nic_full_reset
+$ seq 1 3 | xargs -IXXX ovs-docker add-port br-r4-server ens4 sXXX
+$ ovs-docker add-port br-rEX-server ens4 sEX
+```
+
+#### 各ルーター
+```
+# config
+# load
+# commit
+# save
+# exit
+```
