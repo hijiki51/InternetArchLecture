@@ -51,6 +51,8 @@ Exec this script:
 
 #### サーバー
 ```
+$ ovs-vsctl list-ports br-r4-server | xargs -IXXX ovs-vsctl del-port br-r4-server XXX
+$ ovs-vsctl list-ports br-rEX-server | xargs -IXXX ovs-vsctl del-port br-rEX-server XXX
 $ nic_full_reset
 $ seq 1 3 | xargs -IXXX ovs-docker add-port br-r4-server ens4 sXXX
 $ ovs-docker add-port br-rEX-server ens4 sEX
