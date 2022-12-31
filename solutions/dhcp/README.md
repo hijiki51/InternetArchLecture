@@ -4,26 +4,26 @@
 
 [r4]
 ```
-root@150-95-184-195:~# attach r4
-vyos@r4:/$ config
+root@hijiki51-60000:/# attach r4
+minion@r4:/$ config
 [edit]
-vyos@r4# set interfaces ethernet eth100 address 192.168.0.142/28
+minion@r4# set interfaces ethernet eth100 address 192.168.0.142/28
 
-vyos@r4# set protocols ospf area 0 network 192.168.0.128/28
+minion@r4# set protocols ospf area 0 network 192.168.0.128/28
 
-vyos@r4# set protocols ospf passive-interface eth100
+minion@r4# set protocols ospf passive-interface eth100
 
-vyos@r4# set service dhcp-server shared-network-name dhcp_scope_01 subnet 192.168.0.128/28 default-router 192.168.0.142 ; 送信先ネットワークに対してデフォルトルート(今回はDHCPホストサーバー)を設定
-vyos@r4# set service dhcp-server shared-network-name dhcp_scope_01 subnet 192.168.0.128/28 range 0 start 192.168.0.129
-vyos@r4# set service dhcp-server shared-network-name dhcp_scope_01 subnet 192.168.0.128/28 range 0 stop 192.168.0.139 ; DHCPで使用するネットワークとその中で割り振る範囲を設定
+minion@r4# set service dhcp-server shared-network-name dhcp_scope_01 subnet 192.168.0.128/28 default-router 192.168.0.142 ; 送信先ネットワークに対してデフォルトルート(今回はDHCPホストサーバー)を設定
+minion@r4# set service dhcp-server shared-network-name dhcp_scope_01 subnet 192.168.0.128/28 range 0 start 192.168.0.129
+minion@r4# set service dhcp-server shared-network-name dhcp_scope_01 subnet 192.168.0.128/28 range 0 stop 192.168.0.139 ; DHCPで使用するネットワークとその中で割り振る範囲を設定
 
-vyos@r4# commit
-vyos@r4# save
+minion@r4# commit
+minion@r4# save
 [edit]
-vyos@r4# exit
+minion@r4# exit
 exit
 
-vyos@r6:/$ show dhcp server statistics
+minion@r4/$ show dhcp server statistics
 
 Pool                      Pool size   # Leased    # Avail
 ----                      ---------   --------    -------
