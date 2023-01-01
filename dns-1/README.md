@@ -30,6 +30,8 @@ nsはbind9導入済みUbuntuのインスタンスです。
 ### 1. ネームサーバーを構築してみよう
 ネームサーバーを準備し、`server.{あなたの traQ ID}`のレコードを登録してみましょう。
 
+後々使うのでs1~s3のどれかのIPにしておくといいです。
+
 <details>
 <summary>ヒント1</summary>
 </details>

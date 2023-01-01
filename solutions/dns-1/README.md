@@ -1,0 +1,19 @@
+# DNS-1 Solution
+
+## Assignment 1
+
+NICには事前にIPアドレスを割り当てておきます。
+
+まずはサーバーに割り振られたIPアドレスを確認します。（DHCPであるため手動確認）
+```
+root@s1:/# ip address
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+61: ens4@if62: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+    link/ether 7a:53:1d:45:76:56 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet 192.168.0.129/28 brd 192.168.0.143 scope global dynamic ens4
+       valid_lft 86332sec preferred_lft 86332sec
+```
+
