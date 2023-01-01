@@ -17,3 +17,37 @@ root@s1:/# ip address
        valid_lft 86332sec preferred_lft 86332sec
 ```
 
+ゾーンの設定をします。
+`/etc/bind/named.conf.local`
+```
+//
+// Do any local configuration here
+//
+
+// Consider adding the 1918 zones here, if they are not used in your
+// organization
+//include "/etc/bind/zones.rfc1918";
+
+zone "hijiki51" IN {
+        type master;
+        file "/etc/bind/rr/hijiki51";
+};
+```
+
+各種リソースレコードの設定をします。
+`/etc/bind/rr/hijiki51`
+
+```
+$TTL 60
+@       IN      SOA ns.hijiki51. root.hijiki51 (
+                        1;
+                        600;
+                        600;
+                        600;
+                        600;
+                );
+        IN      NS ns.hijiki51.
+
+ns      IN      A 192.168.0.38
+server  IN      A 192.168.0.129
+```

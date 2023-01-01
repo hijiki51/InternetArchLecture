@@ -5,7 +5,7 @@
 各自のネットワークに合わせて変更してください。
 [例: r6]
 ```
-root@hijiki51-60000:/# attach r5
+root@hijiki51-60000:/# attach r6
 minion@r6:/$ config
 [edit]
 minion@r6# set protocols ospf area 0 network 192.168.0.12/30
