@@ -57,6 +57,6 @@ DNSへのリクエストには`dig`コマンドを用います。
 
 ***
 
-[解答を見る](../solutions/dhcp/README.md)
+[解答を見る](../solutions/dns-1/README.md)
 
 [TOPへ](../README.md)
