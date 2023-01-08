@@ -68,6 +68,6 @@
 
 ***
 
-[解答を見る](../solutions/dhcp/README.md)
+[解答を見る](../solutions/dns-3/README.md)
 
 [TOPへ](../README.md)
