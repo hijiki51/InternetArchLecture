@@ -1,6 +1,6 @@
 # DNS-1 Solution
 
-## Assignment 1
+## Assignment 1(例)
 
 NICには事前にIPアドレスを割り当てておきます。
 
@@ -39,14 +39,14 @@ zone "hijiki51" IN {
 
 ```
 $TTL 60
-@       IN      SOA ns.hijiki51. root.hijiki51 (
+@       IN      SOA ns.{自分のtraQ ID}. root.{自分のtraQ ID}. (
                         1;
                         600;
                         600;
                         600;
                         600;
                 );
-        IN      NS ns.hijiki51.
+        IN      NS ns.{自分のtraQ ID}.
 
 ns      IN      A 192.168.0.38
 server  IN      A 192.168.0.129
@@ -66,3 +66,7 @@ ns.root.        IN      A       {ルートネームサーバーのGlobal IP}
 hijiki51.       IN      NS      ns.hijiki51.
 ns.hijiki51.    IN      A       {受講者のGlobal IP}
 ``` -->
+
+## Assignment 2
+
+`dig @localhost server.{あなたのtraQ ID}`
