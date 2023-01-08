@@ -51,3 +51,18 @@ $TTL 60
 ns      IN      A 192.168.0.38
 server  IN      A 192.168.0.129
 ```
+<!-- 講師用
+```
+$TTL 60
+.               IN      SOA     ns.root. ns.root. (
+                                3;
+                                600;
+                                600;
+                                600;
+                                600;
+                        );
+.               IN      NS      ns.root.
+ns.root.        IN      A       {ルートネームサーバーのGlobal IP}
+hijiki51.       IN      NS      ns.hijiki51.
+ns.hijiki51.    IN      A       {受講者のGlobal IP}
+``` -->
