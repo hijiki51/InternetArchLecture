@@ -30,7 +30,7 @@ Assignmentの解答は[solution](/solution/README.md)以下にあるので困っ
     - memory 1GB
 
 Exec this script:  
-`curl https://raw.githubusercontent.com/FujishigeTemma/InternetArchLecture/main/setup/setup.sh | bash`
+`curl https://raw.githubusercontent.com/hijiki51/InternetArchLecture/main/setup/setup.sh | bash`
 
 ## Table of Contents
 1. [IP Address](/ip-address/README.md)
